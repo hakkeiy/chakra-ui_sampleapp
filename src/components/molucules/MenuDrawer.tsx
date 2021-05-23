@@ -15,7 +15,7 @@ type Props = {
   onClickSetting: () => void;
 };
 
-export const MenuDrawer: VFC = memo((props) => {
+export const MenuDrawer: VFC<Props> = memo((props) => {
   const {
     onClose,
     isOpen,
