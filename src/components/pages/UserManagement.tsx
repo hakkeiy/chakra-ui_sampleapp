@@ -1,12 +1,24 @@
 /*eslint-disable react-hooks/exhaustive-deps */
-import { Center, Spinner, Wrap, WrapItem } from "@chakra-ui/react";
-import { memo, useEffect, VFC } from "react";
+import {
+  Center,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  Spinner,
+  useDisclosure,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
+import { memo, useCallback, useEffect, VFC } from "react";
 
 import { UserCard } from "../organism/user/UserCard";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
 export const UserManagement: VFC = memo(() => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { getUsers, users, loading } = useAllUsers();
+
+  const onClickUser = () => useCallback(() => onOpen(), []);
 
   useEffect(() => getUsers(), []);
   let SpinnerNum: number = 100;
@@ -31,11 +43,18 @@ export const UserManagement: VFC = memo(() => {
                 imageUrl="https://source.unsplash.com/random"
                 userName={user.username}
                 fullName={user.name}
+                onClick={onClickUser}
               />
             </WrapItem>
           ))}
         </Wrap>
       )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <p>テスト</p>
+        </ModalContent>
+      </Modal>
     </>
   );
 });
