@@ -22,7 +22,8 @@ export const useAuth = () => {
         .then((res) => {
           history.push("/home");
           if (res.data) {
-            setLoginUser(res.data);
+            const isAdmin = res.data.id === 10 ? true : false;
+            setLoginUser({ ...res.data, isAdmin });
             showMessage({ title: "ログインしました", status: "success" });
           } else {
             showMessage({ title: "ユーザーが見つかりません", status: "error" });
